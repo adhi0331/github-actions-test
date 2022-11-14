@@ -44,5 +44,6 @@ jobs:
       - name: Adding Known Hosts
         run: ssh-keyscan -H ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
         
+        #Hopefully it works now
       - name: Deploy test
         run: rsync -avz ./test.txt ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:~/
