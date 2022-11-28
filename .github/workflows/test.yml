@@ -45,7 +45,5 @@ jobs:
         with:
           cmd: build
       
-      - name: Run Project
-        uses: borales/actions-yarn@v4
-        with:
-          cmd: start
+      - name: Zip build
+        run: zip -r build.zip build
