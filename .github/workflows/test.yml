@@ -25,14 +25,7 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v3
-
-      - name: Create MeetingPing File
-      env:
-        MEETINGPINGS: ${{ secrets.MEETINGPINGS}}
-      run: |
-        touch src/meetingping.ts
-        echo "$MEETINGPINGS" >> src/meetingping.ts
-
+      
       - name: Set Node.js 16.x
         uses: actions/setup-node@v3
         with: 
