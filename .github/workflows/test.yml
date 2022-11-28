@@ -45,7 +45,7 @@ jobs:
         run: zip -r build.zip build
       
       - name: Unzip And Run
-        run: unzip build.zip && ls
+        run: unzip -o build.zip && ls
   
   deploy:
     name: Deploy Project
