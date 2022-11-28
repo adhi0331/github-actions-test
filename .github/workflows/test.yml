@@ -13,12 +13,6 @@ on:
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
-env:
-  SSH_PRIVATE_KEY: MY_SSH_PRIVATE_KEY
-  REMOTE_HOST: MY_REMOTE_HOST
-  REMOTE_USER: MY_REMOTE_USER
-  TARGET: MY_REMOTE_TARGET
-
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   # This workflow contains a single job called "build"
@@ -53,11 +47,11 @@ jobs:
       - name: Deploy to Staging Server
         uses: easingthemes/ssh-deploy@main
         env:
-          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-          REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
-          REMOTE_USER: ${{ secrets.REMOTE_USER }}
+          SSH_PRIVATE_KEY: ${{ secrets.MY_SSH_PRIVATE_KEY }}
+          REMOTE_HOST: ${{ secrets.MY_REMOTE_HOST }}
+          REMOTE_USER: ${{ secrets.MY_REMOTE_USER }}
           SOURCE: "build.zip"
-          TARGET: ${{ secrets.REMOTE_TARGET }}
+          TARGET: ${{ secrets.MY_REMOTE_TARGET }}
 
   
 
