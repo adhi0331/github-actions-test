@@ -17,6 +17,7 @@ on:
 jobs:
   # This workflow contains a single job called "build"
   build:
+    name: Build Typescript Project
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
 
@@ -29,15 +30,22 @@ jobs:
       - name: Run a one-line script
         run: echo Hello, world!
       
-      - name: Install SSH Key
-        uses: shimataro/ssh-key-action@v2
-        with:
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          known_hosts: 'just-a-placeholder-so-we-dont-get-errors'
+      - name: Set Node.js 16.x
+        uses: actions/setup-node@v3
+        with: 
+          node-version: 16.x
       
-      - name: Adding Known Hosts
-        run: ssh-keyscan -H ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
-        
-        #Hopefully it works now pls :)
-      - name: Deploy test
-        run: rsync -avz ./test.txt ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:~/
+      - name: Run install
+        uses: borales/actions-yarn@v4
+        with:
+          cmd: install # will run yarn install command
+      
+      - name: Build project
+        uses: borales/actions-yarn@v4
+        with:
+          cmd: build
+      
+      - name: Run Project
+        uses: borales/actions-yarn@v4
+        with:
+          cmd: start
