@@ -1,4 +1,6 @@
 #!/bin/bash
-cd /deploy
-sudo unzip build.zip && rm build.zip
+for filename in /
+do
+    echo $filename
+done;
 
