@@ -54,7 +54,7 @@ jobs:
 
   deploy:
     name: Configure AWS Deployment
-    needs: [BuildMove]
+    needs: [build]
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/main'
     steps:
