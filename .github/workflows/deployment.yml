@@ -5,7 +5,7 @@ name: Kartana Deployment
 on:
   push:
     branches: [ "main" ]
-
+ 
 jobs:
 
   build:
