@@ -1,0 +1,86 @@
+# Github actions workflow to triger AWS CodeDeploy to automatically deploy Kartana
+name: Kartana Deployment
+
+# Trigger deployment when merging or pushing to main
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+
+  build:
+    name: Build Project and Move To AWS
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+        # Set the node version
+      - name: Set Node.js 16.x
+        uses: actions/setup-node@v3
+        with: 
+          node-version: 16.x
+      
+        # Run the yarn install command
+      - name: Run install
+        uses: borales/actions-yarn@v4
+        with:
+          cmd: install
+      
+        # Run yarn build
+      - name: Build project
+        uses: borales/actions-yarn@v4
+        with:
+          cmd: build
+
+        # Create build zip
+      - name: Zip build
+        run: zip -r build.zip build
+      
+        # Move file 
+      - name: Deploy to Staging Server
+        uses: easingthemes/ssh-deploy@main
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+          REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
+          REMOTE_USER: ${{ secrets.REMOTE_USER }}
+          SOURCE: "build.zip"
+          TARGET: ${{ secrets.REMOTE_TARGET }}
+      
+      - name: Log Deployment
+        run: |
+          deployDate=date +"%d-%m-%y"
+          echo "Deployment made at $deployDate" >> deployLogs.txt
+
+  deploy:
+    name: Configure AWS Deployment
+    needs: [BuildMove]
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+    steps:
+        # This step will configure the AWS credentials to ensure access to instance
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
+      
+        # This step will trigger AWS Codedeploy to run using the files from the current commit
+      - name: Create CodeDeploy Development
+        id: deploy
+        run: |
+          aws deploy create-deployment \
+            --application-name Discord_Deployment \
+            --deployment-group-name Kartana_Deployment \
+            --deployment-config-name CodeDeployDefault.OneAtATime \
+            --github-location repository=${{ github.repository }},commitId=${{ github.sha }}
+      
+
+      
+      
+    
+
+
+       
+
