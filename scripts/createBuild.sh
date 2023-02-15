@@ -1,6 +1,3 @@
 #!/bin/bash
-for filename in /
-do
-    echo $filename
-done;
-
+cd /opt/kartana
+sudo unzip build.zip && rm build.zip
