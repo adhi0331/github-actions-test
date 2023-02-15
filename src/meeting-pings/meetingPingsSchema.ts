@@ -14,6 +14,12 @@
  *   Step 5: Done! Kartana should check the new calendar and send pings for upcoming meetings.
  */
 export const MeetingPingsSchema = [
+  {
+    name: 'ACM General Calendar',
+    calendarID: 'dummyValue',
+    channelID: '12345678910111213',
+    mentions: '123456789010111213',
+  },
 ];
 
 /**
@@ -23,6 +29,13 @@ export const MeetingPingsSchema = [
  * to pinging the people under the guest list instead of the Discord role associated with the calendar.
  */
 export const CalendarGuestSchema = [
-  
+  {
+    email: 'devlord1@acmucsd.org',
+    discordID: '1234567890111213',
+  },
+  {
+    email: 'devlord2@acmucsd.org',
+    discordID: '123456789010111213',
+  },
 
 ];
