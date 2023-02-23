@@ -70,7 +70,7 @@ jobs:
             --application-name Discord_Deployment \
             --deployment-group-name Kartana_Deployment \
             --deployment-config-name CodeDeployDefault.OneAtATime \
-            --s3-location repository=${{ github.repository }},commitId=${{ github.sha }}
+            --github-location repository=${{ github.repository }},commitId=${{ github.sha }}
       
 
       
