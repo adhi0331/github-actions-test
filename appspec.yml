@@ -4,8 +4,8 @@
 version: 0.0
 os: linux
 files:
-  - source: ./deployLogs.txt
-    destination: /opt/kartana
+  - source: .
+    destination: /kartana
 hooks:
   #Triggers yarn build after installation
   AfterInstall:
