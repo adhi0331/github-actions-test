@@ -1,6 +1,7 @@
 # Github actions workflow to triger AWS CodeDeploy to automatically deploy Kartana
 name: Kartana Deployment
 
+# Add new secret
 # Update aws instance location
 # Trigger deployment when merging or pushing to main
 on:
